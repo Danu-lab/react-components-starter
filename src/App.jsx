@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Header from "./components/Header";
 import Card from "./components/Card";
@@ -28,7 +28,18 @@ let cards = [
 ];
 
 function App() {
-  let [filterCarts, setfilterCarts] = useState(cards);
+  const [cards, setCards] = useState([]);
+  const [filterCarts, setfilterCarts] = useState(cards);
+
+  useEffect(() => {
+    console.log("blabla");
+
+    fetch("https://api.github.com/search/repositories?q=react")
+      .then((response) => response.json())
+      .then((data) => {
+        setCards(data.items);
+      });
+  }, []);
 
   return (
     <>
@@ -47,8 +58,8 @@ function App() {
               <Card
                 key={index}
                 title={val.name}
-                desc={val.desc}
-                stars={val.stars}
+                desc={val.description}
+                stars={val.score}
                 forks={val.forks}
               />
             );
