@@ -13,7 +13,7 @@ function App() {
       <main>
         <form className="search-form">
           <input className="input" />
-          <button className="button">Search</button>
+          <button className="button">Searchblabla</button>
         </form>
 
         <ul className="repo-cards">
