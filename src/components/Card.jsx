@@ -1,15 +1,15 @@
 import "./../App.css";
 
-function Card() {
+function Card(props) {
   return (
-          <li className="repo-card">
-            <span className="title">facebook/react</span>
-            <span className="description">placeholder description</span>
-            <section className="footer">
-              <div>Stars: 500</div>
-              <div>Forks: 100</div>
-            </section>
-          </li>
+    <li className="repo-card">
+      <span className="title">{props.title}</span>
+      <span className="description">{props.desc}</span>
+      <section className="footer">
+        <div>Stars: {props.stars}</div>
+        <div>Forks: {props.forks}</div>
+      </section>
+    </li>
   );
 }
 

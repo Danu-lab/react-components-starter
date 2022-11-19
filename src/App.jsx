@@ -9,19 +9,19 @@ function App() {
     {
       name: "facebook/react",
       desc: "desc1",
-      starts: 100,
+      stars: 100,
       forks: 200,
     },
     {
       name: "vuejs/vue",
       desc: "desc2",
-      starts: 100,
+      stars: 100,
       forks: 200,
     },
     {
       name: "another/asdasd",
       desc: "desc3",
-      starts: 100,
+      stars: 100,
       forks: 200,
     },
   ];
@@ -33,10 +33,16 @@ function App() {
       <main>
         <SearchForm />
         <ul className="repo-cards">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          {cards.map(function (val) {
+            return (
+              <Card
+                title={val.name}
+                desc={val.desc}
+                stars={val.stars}
+                forks={val.forks}
+              />
+            );
+          })}
         </ul>
       </main>
     </>
