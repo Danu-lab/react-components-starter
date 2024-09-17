@@ -1,48 +1,69 @@
 import "./App.css";
 
+import { useState, useEffect } from "react";
+
+import Header from "./components/Header";
+import Card from "./components/Card";
+import SearchForm from "./components/SearchForm";
+
+let cards = [
+  {
+    name: "facebook/react",
+    desc: "desc1",
+    stars: 100,
+    forks: 200,
+  },
+  {
+    name: "vuejs/vue",
+    desc: "desc2",
+    stars: 100,
+    forks: 200,
+  },
+  {
+    name: "another/asdasd",
+    desc: "desc3",
+    stars: 100,
+    forks: 200,
+  },
+];
+
 function App() {
+  const [cards, setCards] = useState([]);
+  const [filterCarts, setfilterCarts] = useState(cards);
+
+  useEffect(() => {
+    console.log("blabla");
+
+    fetch("https://api.github.com/search/repositories?q=react")
+      .then((response) => response.json())
+      .then((data) => {
+        setCards(data.items);
+      });
+  }, []);
+
   return (
     <>
-      <header>
-        <div className="content-wrapper">
-          <h1>Welcome to the JSHeroes Bootcamp!</h1>
-        </div>
-        <img className="bear" src="/js-heroes-bear.png" />
-      </header>
+      <Header />
 
       <main>
-        <form className="search-form">
-          <input className="input" />
-          <button className="button">Search</button>
-        </form>
-
+        <SearchForm
+          onSerch={(value) => {
+            let result = cards.filter((val) => val.name.includes(value));
+            setfilterCarts(result);
+          }}
+        />
         <ul className="repo-cards">
-          <li className="repo-card">
-            <span className="title">facebook/react</span>
-            <span className="description">placeholder description</span>
-            <section className="footer">
-              <div>Stars: 500</div>
-              <div>Forks: 100</div>
-            </section>
-          </li>
-
-          <li className="repo-card">
-            <span className="title">vuejs/vue</span>
-            <span className="description">placeholder description</span>
-            <section className="footer">
-              <div>Stars: 500</div>
-              <div>Forks: 100</div>
-            </section>
-          </li>
-
-          <li className="repo-card">
-            <span className="title">sveltejs/svelte</span>
-            <span className="description">placeholder description</span>
-            <section className="footer">
-              <div>Stars: 500</div>
-              <div>Forks: 100</div>
-            </section>
-          </li>
+          {filterCarts.map(function (val, index) {
+            return (
+              <Card
+                key={index}
+                title={val.name}
+                desc={val.description}
+                stars={val.score}
+                forks={val.forks}
+              />
+            );
+          })}
         </ul>
       </main>
     </>
